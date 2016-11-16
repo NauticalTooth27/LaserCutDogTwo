@@ -11,7 +11,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 	//First we load teh default cad generator script 
 	ICadGenerator defaultCadGen=(ICadGenerator) ScriptingEngine
 	                    .gitScriptRun(
-                                "https://github.com/madhephaestus/laser-cut-robot.git", // git location of the library
+                                "https://github.com/NauticalTooth27/laser-cut-robot.git", // git location of the library
 	                              "laserCutCad.groovy" , // file to load
 	                              null
                         )
@@ -53,7 +53,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 		//allCad.add(myCSG);
 		if(linkIndex ==dhLinks.size()-1){
 			println "Found foot limb" 
-			CSG foot =new Cylinder(20,20,thickness.getMM(),(int)30).toCSG() // a one line Cylinder
+			CSG foot =new Cylinder(20,20,20,(int)30).toCSG() // a one line Cylinder
 
 			CSG otherBit =new Cube(	40,// X dimention
 								dh.getR(),// Y dimention
