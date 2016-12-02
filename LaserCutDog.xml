@@ -45,7 +45,7 @@
 		<vitamin>
 			<name>shaft</name>
 			<type>hobbyServoHorn</type>
-			<id>standard4</id>
+			<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -98,7 +98,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -151,7 +151,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -237,7 +237,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -290,7 +290,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -343,7 +343,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -429,7 +429,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -482,7 +482,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -535,7 +535,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -621,7 +621,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -674,7 +674,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>
@@ -727,7 +727,7 @@
 	<vitamin>
 	<name>shaft</name>
 	<type>hobbyServoHorn</type>
-	<id>standard4</id>
+	<id>standardMicro1</id>
 	</vitamin>
 
 </vitamins>

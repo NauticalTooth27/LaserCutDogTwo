@@ -63,19 +63,19 @@ class Feet implements ICadGenerator, IParameterChanged{
 		
 		
 		
-		CSG leg = new Cube(45, dh.getR(), 45).toCSG().toYMin()
+		CSG leg = new Cube(45, dh.getR(), 45).toCSG().toYMin().rotz(-90)
 
 		leg = defaultCadGen.moveDHValues(leg,dh)
 		
-		for(int i = 0; i < 4; i++)
-		{
+		//for(int i = 0; i < 4; i++)
+		//{
 			//leg = leg.difference(defaultCadGen.moveDHValues(horncutout,dh)) //differencing horn
-			leg = leg.difference(defaultCadGen.moveDHValues(horncutout,dh)).movex(dh.getR()) //differencing horn
-		}
+			leg = leg.difference(defaultCadGen.moveDHValues(horncutout,dh)).movex(dh.getR()) //differencing horn, moving leg to x pos
+		//}
 			
 			//.difference(defaultCadGen.moveDHValues(servoReference.hull(),dh))
 						
-			//leg = defaultCadGen.moveDHValues(leg,dh)
+			leg = defaultCadGen.moveDHValues(leg,dh)
 			
 		if(linkIndex ==dhLinks.size()-1){
 			println "Found foot limb" 
