@@ -11,7 +11,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 	//First we load teh default cad generator script 
 	ICadGenerator defaultCadGen=(ICadGenerator) ScriptingEngine
 	                    .gitScriptRun(
-                                "https://github.com/NauticalTooth27/laser-cut-robot.git", // git location of the library
+                                "https://github.com/NauticalTooth27/LaserCutDogTwo.git", // git location of the library
 	                              "laserCutCad.groovy" , // file to load
 	                              null
                         )
@@ -38,37 +38,56 @@ class Feet implements ICadGenerator, IParameterChanged{
 		ArrayList<CSG> allCad=defaultCadGen.generateCad(d,linkIndex);
 		ArrayList<DHLink> dhLinks=d.getChain().getLinks();
 		DHLink dh = dhLinks.get(linkIndex)
-
-		//The link configuration
-		LinkConfiguration conf = d.getLinkConfiguration(linkIndex);
-		// creating the servo
-		CSG servoReference=   Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
-		.transformed(new Transform().rotZ(90))
-		//Creating the horn
-		double servoTop = servoReference.getMaxZ()
-		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())	
 		
+		LinkConfiguration conf = d.getLinkConfiguration(linkIndex);
+
+		HashMap<String, Object> shaftmap = Vitamins.getConfiguration(conf.getShaftType(),conf.getShaftSize())
+		double hornOffset = 	shaftmap.get("hornThickness")	
+		
+		// creating the servo
+		CSG servoReference = Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
+		.transformed(new Transform().rotZ(90))
+		
+		double servoTop = servoReference.getMaxZ()
+
+		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())
 		
 		//If you want you can add things here
 		//allCad.add(myCSG);
-		if(linkIndex ==dhLinks.size()-1){
-			println "Found foot limb" 
-			CSG foot =new Cylinder(20,20,20,(int)30).toCSG() // a one line Cylinder
-
-			CSG otherBit =new Cube(	40,// X dimention
-								dh.getR(),// Y dimention
-								thickness.getMM()//  Z dimention
-								).toCSG()// this converts from the geometry to an object we can work with
-								.toYMin()
-								.toZMin()
-			
-			//moving the pary to the attachment pont
-			otherBit = defaultCadGen.moveDHValues(otherBit,dh)
-			
-			defaultCadGen.add(allCad,otherBit,dh.getListener())
-			defaultCadGen.add(allCad,foot,dh.getListener())
+		
+		CSG horncutout = horn
+		for (int i = 1; i< 4; i++)
+		{
+		 horncutout = horncutout.union(horn.movez(hornOffset * i))
 		}
 		
+		
+		
+		CSG leg = new Cube(45, dh.getR(), 45).toCSG().toYMin()
+
+		leg = defaultCadGen.moveDHValues(leg,dh)
+		
+		for(int i = 0; i < 4; i++)
+		{
+			//leg = leg.difference(defaultCadGen.moveDHValues(horncutout,dh)) //differencing horn
+			leg = leg.difference(defaultCadGen.moveDHValues(horncutout,dh)).movex(dh.getR()) //differencing horn
+		}
+			
+			//.difference(defaultCadGen.moveDHValues(servoReference.hull(),dh))
+						
+			//leg = defaultCadGen.moveDHValues(leg,dh)
+			
+		if(linkIndex ==dhLinks.size()-1){
+			println "Found foot limb" 
+			leg = leg.union(new Sphere(25,25,10).toCSG()) // a one line Sphere
+			//defaultCadGen.add(allCad,foot,dh.getListener())
+
+			//leg = leg.difference(horn.hull())
+		}
+
+		defaultCadGen.add(allCad,leg,dh.getListener())
+
+		//leg.setManufactuing({ CSG arg0 -> return defaultCadGen.reverseDHValues(arg0,dh).toZMin() }) //typo is on purpose - currently correct reference to buried code
 		
 		return allCad;
 	}
