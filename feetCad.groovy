@@ -56,7 +56,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 		//allCad.add(myCSG);
 
 		
-		CSG horncutout = horn.rotz(-90);
+		CSG horncutout = horn//.rotz(-90);
 		for (int i = 1; i< 4; i++)
 		{
 		 horncutout = horncutout.union(horn.movez(hornOffset * i))
@@ -65,15 +65,27 @@ class Feet implements ICadGenerator, IParameterChanged{
 
 	
 		CSG leg = new Cube(45, dh.getR(), 45).toCSG().toYMin().rotz(-90)
+
+		//horncutout = horncutout.toXMin().toYMin().toZMin().movex(10)
 		
-		leg = defaultCadGen.moveDHValues(leg.difference(horncutout).difference(horncutout.movez(dh.getR())).movex(dh.getR()),dh)
+		//leg = leg.toXMin().toYMin().toZMin().difference(horncutout)
+		
+		//leg = defaultCadGen.moveDHValues(leg.difference(horncutout).movex(dh.getR()),dh)
+
+
+		defaultCadGen.moveDHValues(horncutout, dh);
+		defaultCadGen.moveDHValues(leg, dh);
+		leg = leg.difference(horncutout.rotz(-90).movex(-dh.getR()))
+		
 			
 		if(linkIndex ==dhLinks.size()-1){
 			println "Found foot limb" 
 			leg = leg.union(new Sphere(25,25,10).toCSG()) // a one line Sphere
-			//defaultCadGen.add(allCad,foot,dh.getListener())
-
-			//leg = leg.difference(horn.hull())
+		}
+		else
+		{
+			leg = leg.difference(horncutout.rotz(-90));
+			leg = leg.difference(servoReference)
 		}
 
 		defaultCadGen.add(allCad,leg,dh.getListener())
