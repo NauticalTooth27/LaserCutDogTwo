@@ -54,28 +54,19 @@ class Feet implements ICadGenerator, IParameterChanged{
 		
 		//If you want you can add things here
 		//allCad.add(myCSG);
+
 		
-		CSG horncutout = horn
+		CSG horncutout = horn.rotz(-90);
 		for (int i = 1; i< 4; i++)
 		{
 		 horncutout = horncutout.union(horn.movez(hornOffset * i))
 		}
-		
-		
-		
-		CSG leg = new Cube(45, dh.getR(), 45).toCSG().toYMin().rotz(-90)
 
-		leg = defaultCadGen.moveDHValues(leg,dh)
+
+	
+		CSG leg = new Cube(45, dh.getR(), 45).toCSG().toYMin().rotz(-90)
 		
-		//for(int i = 0; i < 4; i++)
-		//{
-			//leg = leg.difference(defaultCadGen.moveDHValues(horncutout,dh)) //differencing horn
-			leg = leg.difference(defaultCadGen.moveDHValues(horncutout,dh)).movex(dh.getR()) //differencing horn, moving leg to x pos
-		//}
-			
-			//.difference(defaultCadGen.moveDHValues(servoReference.hull(),dh))
-						
-			leg = defaultCadGen.moveDHValues(leg,dh)
+		leg = defaultCadGen.moveDHValues(leg.difference(horncutout).difference(horncutout.movez(dh.getR())).movex(dh.getR()),dh)
 			
 		if(linkIndex ==dhLinks.size()-1){
 			println "Found foot limb" 
