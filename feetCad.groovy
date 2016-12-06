@@ -64,7 +64,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 
 
 	
-		CSG leg = new Cube(45, dh.getR(), 45).toCSG().toYMin().rotz(-90)
+		CSG leg = new Cube(45, dh.getR() + 20, 45).toCSG().toYMin().rotz(-90)
 
 		//horncutout = horncutout.toXMin().toYMin().toZMin().movex(10)
 		
@@ -76,6 +76,8 @@ class Feet implements ICadGenerator, IParameterChanged{
 		defaultCadGen.moveDHValues(horncutout, dh);
 		defaultCadGen.moveDHValues(leg, dh);
 		leg = leg.difference(horncutout.rotz(-90).movex(-dh.getR()))
+		//if(linkIndex != 0)
+		//	leg = leg.difference(dhLinks.get(linkIndex - 1))
 		
 			
 		if(linkIndex ==dhLinks.size()-1){
