@@ -109,6 +109,7 @@ return new ICadGenerator(){
 		LinkConfiguration conf = sourceLimb.getLinkConfiguration(linkIndex);
 
 		String linkStr =conf.getXml()
+		println linkStr
 		ArrayList<CSG> csg = null;
 		HashMap<String,ArrayList<CSG>> legmap=null;
 		if(map.get(legStr)==null){
@@ -132,8 +133,19 @@ return new ICadGenerator(){
 		double hornOffset = 	shaftmap.get("hornThickness")	
 		
 		// creating the servo
-		CSG servoReference=   Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
-		.transformed(new Transform().rotZ(90))
+		
+		try
+		{
+			CSG servoReference=   Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
+			.transformed(new Transform().rotZ(90))
+		}
+		catch(NullPointerException e)
+		{
+			conf.setElectroMechanicalType("hobbyServo")
+			conf.setElectroMechanicalSize("towerProMG91")
+			CSG servoReference=   Vitamins.get("hobbyServo","towerProMG91")
+			.transformed(new Transform().rotZ(90))
+		}
 		
 		double servoTop = servoReference.getMaxZ()
 		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())	
