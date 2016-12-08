@@ -139,7 +139,7 @@ return new ICadGenerator(){
 			CSG servoReference=   Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
 			.transformed(new Transform().rotZ(90))
 		}
-		catch(NullPointerException e)
+		catch(Exception e)
 		{
 			conf.setElectroMechanicalType("hobbyServo")
 			conf.setElectroMechanicalSize("towerProMG91")
