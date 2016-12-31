@@ -31,7 +31,7 @@ class Feet implements ICadGenerator, IParameterChanged{
 	double boltDimeMeasurment = boltMeasurments.get("outerDiameter")
 	double nutDimeMeasurment = nutMeasurments.get("width")
 	double nutThickMeasurment = nutMeasurments.get("height")
-	private TransformNR offset =BowlerStudio3dEngine.getOffsetforvisualization().inverse();
+	//private TransformNR offset =BowlerStudio3dEngine.getOffsetforvisualization().inverse();
 	ArrayList<CSG> headParts =null
 	@Override 
 	public ArrayList<CSG> generateCad(DHParameterKinematics d, int linkIndex) {
@@ -76,8 +76,8 @@ class Feet implements ICadGenerator, IParameterChanged{
 		defaultCadGen.moveDHValues(horncutout, dh);
 		defaultCadGen.moveDHValues(leg, dh);
 		leg = leg.difference(horncutout.rotz(-90).movex(-dh.getR()))
-		//if(linkIndex != 0)
-		//	leg = leg.difference(dhLinks.get(linkIndex - 1))
+//		if(linkIndex != 0)
+//			leg = leg.difference(dhLinks.get(linkIndex - 1))
 		
 			
 		if(linkIndex ==dhLinks.size()-1){

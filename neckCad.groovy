@@ -31,7 +31,7 @@ class HeadOnNeck implements ICadGenerator, IParameterChanged{
 	double boltDimeMeasurment = boltMeasurments.get("outerDiameter")
 	double nutDimeMeasurment = nutMeasurments.get("width")
 	double nutThickMeasurment = nutMeasurments.get("height")
-	private TransformNR offset =BowlerStudio3dEngine.getOffsetforvisualization().inverse();
+	//private TransformNR offset =BowlerStudio3dEngine.getOffsetforvisualization().inverse();
 	ArrayList<CSG> headParts =null
 	CSG cutsheet=null;
 	@Override 
@@ -115,4 +115,4 @@ class HeadOnNeck implements ICadGenerator, IParameterChanged{
 	}
 };
 
-return new HeadOnNeck()
+return //new HeadOnNeck()
