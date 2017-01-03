@@ -45,52 +45,41 @@ class Feet implements ICadGenerator, IParameterChanged{
 		double hornOffset = 	shaftmap.get("hornThickness")	
 		
 		// creating the servo
-		CSG servoReference = Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
+		//CSG servoReference = Vitamins.get(conf.getElectroMechanicalType(),conf.getElectroMechanicalSize())
+		//print conf.getElectroMechanicalType() + " " + conf.getElectroMechanicalSize() + "\n"
+		CSG servoReference = Vitamins.get("hobbyServo","towerProMG91")
 		.transformed(new Transform().rotZ(90))
-		
+
 		double servoTop = servoReference.getMaxZ()
 
 		CSG horn = Vitamins.get(conf.getShaftType(),conf.getShaftSize())
 		
-		//If you want you can add things here
-		//allCad.add(myCSG);
-
-		
 		CSG horncutout = horn//.rotz(-90);
 		for (int i = 1; i< 4; i++)
 		{
-		 horncutout = horncutout.union(horn.movez(hornOffset * i))
+			horncutout = horncutout.union(horn.movez(hornOffset * i))
 		}
 
-
-	
 		CSG leg = new Cube(45, dh.getR() + 20, 45).toCSG().toYMin().rotz(-90)
-
-		//horncutout = horncutout.toXMin().toYMin().toZMin().movex(10)
-		
-		//leg = leg.toXMin().toYMin().toZMin().difference(horncutout)
-		
-		//leg = defaultCadGen.moveDHValues(leg.difference(horncutout).movex(dh.getR()),dh)
-
 
 		defaultCadGen.moveDHValues(horncutout, dh);
 		defaultCadGen.moveDHValues(leg, dh);
-		leg = leg.difference(horncutout.rotz(-90).movex(-dh.getR()))
-//		if(linkIndex != 0)
-//			leg = leg.difference(dhLinks.get(linkIndex - 1))
-		
+		defaultCadGen.moveDHValues(servoReference, dh);
 			
 		if(linkIndex ==dhLinks.size()-1){
 			println "Found foot limb" 
-			leg = leg.union(new Sphere(25,25,10).toCSG()) // a one line Sphere
+			leg = leg.union(new Sphere(25,25,10).toCSG()); // a one line Sphere
 		}
-		else
-		{
-			leg = leg.difference(horncutout.rotz(-90));
-			leg = leg.difference(servoReference)
-		}
+		//else
+		//{
+			//leg = leg.difference(generateCad(d, linkIndex + 1))
+		//}
+		leg = leg.difference(horncutout.rotz(-90));
+		leg = leg.difference(servoReference.movex(-dh.getR()));
 
-		defaultCadGen.add(allCad,leg,dh.getListener())
+		
+
+		defaultCadGen.add(allCad,leg,dh.getListener());
 
 		//leg.setManufactuing({ CSG arg0 -> return defaultCadGen.reverseDHValues(arg0,dh).toZMin() }) //typo is on purpose - currently correct reference to buried code
 		
